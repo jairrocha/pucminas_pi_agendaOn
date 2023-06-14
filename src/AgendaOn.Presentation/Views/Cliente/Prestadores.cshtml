@@ -1,0 +1,39 @@
+﻿@model AgendaOn.Presentation.ViewModels.PrestadoresViewModel
+
+@{
+    ViewData["Title"] = "Prestadores";
+}
+
+<h1>Lista de massagistas</h1>
+
+
+<table class="table table-striped table-hover table-bordered mt-5">
+    <thead>
+        <tr>
+            <th>Ação</th>
+            <th>Nome</th>
+            <th>Preco</th>
+            <th class="text-center">Nota</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Prestadores)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Agendar", "Agendar","Agendamento", new { Id=item.Id }, new { @class = "btn btn-primary btn-sm"})
+                </td>
+                <td>
+                    @item.Usuario.Nome
+                </td>
+                <td>
+                    @item.Preco.ToString("C")
+                </td>
+                <td class="text-center">
+                    @item?.Perfil?.Avaliacoes.Average(_ => _?.Nota)?.ToString("F1")
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

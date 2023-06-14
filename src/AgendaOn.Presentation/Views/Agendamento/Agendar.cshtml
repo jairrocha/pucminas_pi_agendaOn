@@ -1,0 +1,157 @@
+﻿@model AgendaOn.Presentation.ViewModels.AgendamentoViewModel;
+
+@{
+    ViewData["Title"] = "Prestadores";
+}
+
+<h1>Agendamento</h1>
+
+
+<hr />
+
+<div>
+
+    @Html.ValidationSummary(false,"", new { @class = "text-danger" })
+
+</div>
+
+
+@using (Html.BeginForm("Agendar", "Agendamento", FormMethod.Post))
+{
+
+    <div class="form-group mb-5">
+
+
+        @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2 fs-5" })
+        <input type="date" class="form-control" id="data-agendamento" name="data" value="@Model.Data.ToString("yyyy-MM-dd")" />
+
+
+    </div>
+
+    <p class="fs-5">Manhã:</p>
+    <div class="form-group mt-1" id="horario-manha">
+    </div>
+
+    <hr class="mt-2" />
+
+    <p class="fs-5">Tarde:</p>
+    <div class="form-group mt-1" id=horario-tarde>
+    </div>
+    <hr class="mt-2" />
+
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary mt-2">Agendar horário</button>
+
+    </div>
+
+
+    <input type="text" class="hide" name="PrestadorId" value="@Model.PrestadorId" />
+    <input type="text" class="hide" name="ClienteId" value="@Model.ClienteId" />
+    <input type="text" class="hide" name="AgendametoId" value="@Model.AgendametoId" />
+
+
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#data-agendamento").change(function () {
+                carregarHorarios();
+            });
+        });
+
+
+
+        function carregarHorarios() {
+            $.ajax({
+                type: "POST",
+                url: "/Agendamento/CarregarHorariosDisponiveis",
+                dataType: "json",
+                data: { prestadorId: @Model.PrestadorId, data: $("#data-agendamento").val() },
+                success: function (result) {
+                    //console.log(result);
+                    $("#horario-manha").empty();
+                    $("#horario-tarde").empty();
+
+                    let possuiHrTarde = false;
+                    let possuiHrManha = false;
+
+                    
+                    if (result == "" || result === null)  {
+                        naoPossuiHorario(possuiHrManha, possuiHrTarde);
+                        return;
+                    }
+
+
+
+                    result.forEach(function (item) {
+
+                                                
+                        const opcoes = { hour12: false };
+
+                        let hora = new Date();
+                        
+                        hora.setHours(item.horario.substring(0, 2));
+                        
+                        hora = hora.toLocaleTimeString('pt-BR', opcoes);
+                                               
+                        if (hora.substring(0, 2) >= 12) {
+                            div = "#horario-tarde";
+                            possuiHrTarde = true;
+                        }
+                        else {
+                            div = "#horario-manha";
+                            possuiHrManha = true;
+                        }
+
+                        const novoBotao = document.createElement("input");
+                        novoBotao.type = "radio";
+                        novoBotao.name = "SelectedOptionId"
+                        novoBotao.value = item.id;
+                        novoBotao.id = item.id;
+                        novoBotao.classList.add("form-check-input", "me-1");
+
+                        const novoRotulo = document.createElement("label");
+                        novoRotulo.classList.add("form-check-label", "me-2");
+                        novoRotulo.htmlFor = item.id;
+                        novoRotulo.textContent = item.horario;
+
+                        $(div).append(novoBotao);
+                        $(div).append(novoRotulo);
+
+                    });
+
+
+                    naoPossuiHorario(possuiHrManha, possuiHrTarde);
+
+
+                }
+            });
+        }
+
+        function naoPossuiHorario(possuiHrManha, possuiHrTarde) {
+
+            const aviso = document.createElement('p');
+            aviso.innerText = "Horários esgostado.";
+            aviso.classList.add("text-danger");
+
+            const aviso1 = document.createElement('p');
+            aviso1.innerText = "Horários esgostado.";
+            aviso1.classList.add("text-danger");
+                    
+
+            if (possuiHrManha === false) {
+                $("#horario-manha").append(aviso);
+            }
+
+            if (possuiHrTarde === false) {
+                $("#horario-tarde").append(aviso1);
+            }
+        }
+
+        window.addEventListener('load', carregarHorarios);
+
+    </script>
+}
+
