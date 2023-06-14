@@ -67,6 +67,11 @@ namespace AgendaOn.Presentation.Controllers
         public IActionResult Agendar(int id, int idAleracao = 0)
         {
 
+            if (UsuarioLogado.TipoUsuario == (int)TipoUsuario.PRESTADOR)
+            {
+                return RedirectToAction("Agenda", "Agendamento");
+            }
+
             var vw = new AgendamentoViewModel()
             {
                 ClienteId = UsuarioLogado.IdEntity,

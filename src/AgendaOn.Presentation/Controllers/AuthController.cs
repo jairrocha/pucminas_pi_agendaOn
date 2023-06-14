@@ -63,8 +63,8 @@ namespace AgendaOn.Presentation.Controllers
             
             await _signInManager.SignInAsync(user,false);
 
-            _usuarioService.Cadastrar(TipoUsuario.CLIENTE, registrarUsuario.Name, user.Email, user.Id);
-            //_usuarioService.Cadastrar(TipoUsuario.PRESTADOR, registrarUsuario.Name, user.Email, user.Id);
+            //_usuarioService.Cadastrar(TipoUsuario.CLIENTE, registrarUsuario.Name, user.Email, user.Id);
+            _usuarioService.Cadastrar(TipoUsuario.PRESTADOR, registrarUsuario.Name, user.Email, user.Id);
 
 
             return RedirectToAction("CarregarInfo");

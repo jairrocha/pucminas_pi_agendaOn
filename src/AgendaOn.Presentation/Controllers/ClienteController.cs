@@ -1,4 +1,5 @@
 ﻿using AgendaOn.Domain.Entities;
+using AgendaOn.Domain.Enums;
 using AgendaOn.Domain.Interfaces.Services;
 using AgendaOn.Presentation.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,10 @@ namespace AgendaOn.Presentation.Controllers
 
         public IActionResult Prestadores()
         {
+            if (UsuarioLogado.TipoUsuario == (int)TipoUsuario.PRESTADOR)
+            {
+                return RedirectToAction("Agenda", "Agendamento");
+            }
 
             var vw = new PrestadoresViewModel()
             {
