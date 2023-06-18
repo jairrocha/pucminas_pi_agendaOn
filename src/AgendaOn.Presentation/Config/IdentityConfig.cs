@@ -12,7 +12,7 @@ namespace AgendaOn.Presentation.Config
                      
 
             services.AddDbContext<IdentityContext>
-                (opt => opt.UseSqlite(configuration
+                (opt => opt.UseMySQL(configuration
                 .GetConnectionString("IdentityConnection")));
 
 

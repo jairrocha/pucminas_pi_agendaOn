@@ -1,36 +1,41 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace AgendaOn.Infra.Data.Migrations
+namespace AgendaOn.Infra.Data.Migrations.AgendaOn
 {
-    public partial class first : Migration
+    public partial class createdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "TB_USUARIO",
                 columns: table => new
                 {
-                    ID_USUARIO = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ID_IDENTITY = table.Column<string>(type: "TEXT", nullable: false),
-                    NOME = table.Column<string>(type: "TEXT", unicode: false, maxLength: 100, nullable: false),
-                    EMAIL = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false)
+                    ID_USUARIO = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID_IDENTITY = table.Column<string>(type: "varchar(255)", nullable: false),
+                    NOME = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
+                    EMAIL = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_USUARIO", x => x.ID_USUARIO);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_ADMINISTRADOR",
                 columns: table => new
                 {
-                    ID_ADMINISTRADOR = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ID_USUARIO = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_ADMINISTRADOR = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID_USUARIO = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,15 +46,16 @@ namespace AgendaOn.Infra.Data.Migrations
                         principalTable: "TB_USUARIO",
                         principalColumn: "ID_USUARIO",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_CLIENTE",
                 columns: table => new
                 {
-                    ID_CLIENTE = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ID_USUARIO = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_CLIENTE = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID_USUARIO = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,16 +66,17 @@ namespace AgendaOn.Infra.Data.Migrations
                         principalTable: "TB_USUARIO",
                         principalColumn: "ID_USUARIO",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_PRESTADOR",
                 columns: table => new
                 {
-                    ID_PRESTADOR = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ID_USUARIO = table.Column<int>(type: "INTEGER", nullable: false),
-                    PRECO = table.Column<decimal>(type: "TEXT", nullable: false, defaultValue: 100m)
+                    ID_PRESTADOR = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID_USUARIO = table.Column<int>(type: "int", nullable: false),
+                    PRECO = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 100m)
                 },
                 constraints: table =>
                 {
@@ -80,17 +87,18 @@ namespace AgendaOn.Infra.Data.Migrations
                         principalTable: "TB_USUARIO",
                         principalColumn: "ID_USUARIO",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_HORARIO",
                 columns: table => new
                 {
-                    ID_HORARIO = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    HORA_INICIO = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    HORA_FIM = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    ID_PRESTADOR = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_HORARIO = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    HORA_INICIO = table.Column<TimeOnly>(type: "time", nullable: false),
+                    HORA_FIM = table.Column<TimeOnly>(type: "time", nullable: false),
+                    ID_PRESTADOR = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,16 +109,17 @@ namespace AgendaOn.Infra.Data.Migrations
                         principalTable: "TB_PRESTADOR",
                         principalColumn: "ID_PRESTADOR",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_PERFIL",
                 columns: table => new
                 {
-                    ID_PERFIL = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DESCRICAO = table.Column<string>(type: "TEXT", unicode: false, nullable: false),
-                    ID_PRESTADOR = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_PERFIL = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DESCRICAO = table.Column<string>(type: "longtext", unicode: false, nullable: false),
+                    ID_PRESTADOR = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,19 +129,20 @@ namespace AgendaOn.Infra.Data.Migrations
                         column: x => x.ID_PRESTADOR,
                         principalTable: "TB_PRESTADOR",
                         principalColumn: "ID_PRESTADOR");
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_AGENDAMENTO",
                 columns: table => new
                 {
-                    ID_AGENDAMENTO = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ID_CLIENTE = table.Column<int>(type: "INTEGER", nullable: false),
-                    ID_PRESTADOR = table.Column<int>(type: "INTEGER", nullable: false),
-                    ID_HORARIO = table.Column<int>(type: "INTEGER", nullable: false),
-                    DT_AGENDAMENTO = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DT_CANCELAMENTO = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    ID_AGENDAMENTO = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ID_CLIENTE = table.Column<int>(type: "int", nullable: false),
+                    ID_PRESTADOR = table.Column<int>(type: "int", nullable: false),
+                    ID_HORARIO = table.Column<int>(type: "int", nullable: false),
+                    DT_AGENDAMENTO = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DT_CANCELAMENTO = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,18 +162,19 @@ namespace AgendaOn.Infra.Data.Migrations
                         column: x => x.ID_PRESTADOR,
                         principalTable: "TB_PRESTADOR",
                         principalColumn: "ID_PRESTADOR");
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_AVALIACAO",
                 columns: table => new
                 {
-                    ID_AVALIACAO = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    NOTA = table.Column<int>(type: "INTEGER", nullable: false),
-                    DESC_AVALIACAO = table.Column<string>(type: "TEXT", unicode: false, maxLength: 100, nullable: true),
-                    ID_PERFIL = table.Column<int>(type: "INTEGER", nullable: false),
-                    ID_CLIENTE = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_AVALIACAO = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    NOTA = table.Column<int>(type: "int", nullable: false),
+                    DESC_AVALIACAO = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
+                    ID_PERFIL = table.Column<int>(type: "int", nullable: false),
+                    ID_CLIENTE = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,16 +189,17 @@ namespace AgendaOn.Infra.Data.Migrations
                         column: x => x.ID_PERFIL,
                         principalTable: "TB_PERFIL",
                         principalColumn: "ID_PERFIL");
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_FOTO",
                 columns: table => new
                 {
-                    ID_FOTO = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PATH = table.Column<string>(type: "TEXT", unicode: false, nullable: false),
-                    ID_PERFIL = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_FOTO = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    PATH = table.Column<string>(type: "longtext", unicode: false, nullable: false),
+                    ID_PERFIL = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,17 +209,18 @@ namespace AgendaOn.Infra.Data.Migrations
                         column: x => x.ID_PERFIL,
                         principalTable: "TB_PERFIL",
                         principalColumn: "ID_PERFIL");
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "TB_REDE_SOCIAL",
                 columns: table => new
                 {
-                    ID_REDE_SOCIAL = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    NOME_REDE = table.Column<string>(type: "TEXT", unicode: false, nullable: false),
-                    LINK = table.Column<string>(type: "TEXT", unicode: false, nullable: false),
-                    ID_PERFIL = table.Column<int>(type: "INTEGER", nullable: false)
+                    ID_REDE_SOCIAL = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    NOME_REDE = table.Column<string>(type: "longtext", unicode: false, nullable: false),
+                    LINK = table.Column<string>(type: "longtext", unicode: false, nullable: false),
+                    ID_PERFIL = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,7 +230,8 @@ namespace AgendaOn.Infra.Data.Migrations
                         column: x => x.ID_PERFIL,
                         principalTable: "TB_PERFIL",
                         principalColumn: "ID_PERFIL");
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_ADMINISTRADOR_ID_USUARIO",

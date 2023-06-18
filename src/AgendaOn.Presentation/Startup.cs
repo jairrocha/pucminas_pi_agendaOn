@@ -20,10 +20,10 @@ namespace AgendaOn.Presentation
 
 
             services.AddDbContext<IdentityContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DbIdentity")));
+                options.UseMySQL(Configuration.GetConnectionString("DbIdentity")));
 
             services.AddDbContext<AgendaOnContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DbAgendaOn")));
+                options.UseMySQL(Configuration.GetConnectionString("DbAgendaOn")));
 
             services.Identity(Configuration);
             services.Register();

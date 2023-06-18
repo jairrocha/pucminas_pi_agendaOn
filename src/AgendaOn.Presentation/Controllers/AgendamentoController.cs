@@ -103,9 +103,9 @@ namespace AgendaOn.Presentation.Controllers
             {
 
                 var resp = horarios
-                    .Where(_ => _.HoraInicio.Hour >= DateTime.Now.Hour &&
+                    .Where(_ => _.HoraInicio.Hours >= DateTime.Now.Hour &&
                            new TimeSpan((int)DateTime.Now.Hour, (int)DateTime.Now.Minute, 0) <=
-                           new TimeSpan(_.HoraFim.Hour, _.HoraFim.Minute, 0))
+                           new TimeSpan(_.HoraFim.Hours, _.HoraFim.Minutes, 0))
 
                     .Select(_ => new { Id = _.Id, Horario = $"{_.HoraInicio}-{_.HoraFim}" })
                     .ToList();

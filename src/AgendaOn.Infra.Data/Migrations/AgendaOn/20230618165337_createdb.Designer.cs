@@ -3,29 +3,33 @@ using System;
 using AgendaOn.Infra.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AgendaOn.Infra.Data.Migrations
+namespace AgendaOn.Infra.Data.Migrations.AgendaOn
 {
     [DbContext(typeof(AgendaOnContext))]
-    partial class AgendaOnContextModelSnapshot : ModelSnapshot
+    [Migration("20230618165337_createdb")]
+    partial class createdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.13");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("AgendaOn.Domain.Entities.Administrador", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_ADMINISTRADOR");
 
                     b.Property<int>("UsuarioId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_USUARIO");
 
                     b.HasKey("Id");
@@ -40,27 +44,27 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_AGENDAMENTO");
 
                     b.Property<int>("ClienteId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_CLIENTE");
 
                     b.Property<DateTime>("DataAgendamento")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("DT_AGENDAMENTO");
 
                     b.Property<DateTime?>("DataCancelamento")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("DT_CANCELAMENTO");
 
                     b.Property<int>("HorarioId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_HORARIO");
 
                     b.Property<int>("PrestadorId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PRESTADOR");
 
                     b.HasKey("Id");
@@ -78,25 +82,25 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_AVALIACAO");
 
                     b.Property<int>("ClienteId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_CLIENTE");
 
                     b.Property<string>("DescAvaliacao")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("DESC_AVALIACAO");
 
                     b.Property<int>("Nota")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("NOTA");
 
                     b.Property<int>("PerfilId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PERFIL");
 
                     b.HasKey("Id");
@@ -112,11 +116,11 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_CLIENTE");
 
                     b.Property<int>("UsuarioId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_USUARIO");
 
                     b.HasKey("Id");
@@ -131,17 +135,17 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_FOTO");
 
                     b.Property<string>("Path")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("PATH");
 
                     b.Property<int>("PerfilId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PERFIL");
 
                     b.HasKey("Id");
@@ -155,19 +159,19 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_HORARIO");
 
                     b.Property<TimeOnly>("HoraFim")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("time")
                         .HasColumnName("HORA_FIM");
 
                     b.Property<TimeOnly>("HoraInicio")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("time")
                         .HasColumnName("HORA_INICIO");
 
                     b.Property<int>("PrestadorId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PRESTADOR");
 
                     b.HasKey("Id");
@@ -181,17 +185,17 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PERFIL");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("DESCRICAO");
 
                     b.Property<int>("PrestadorId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PRESTADOR");
 
                     b.HasKey("Id");
@@ -206,17 +210,17 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PRESTADOR");
 
                     b.Property<decimal>("Preco")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(100m)
                         .HasColumnName("PRECO");
 
                     b.Property<int>("UsuarioId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_USUARIO");
 
                     b.HasKey("Id");
@@ -231,23 +235,23 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_REDE_SOCIAL");
 
                     b.Property<string>("Link")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("LINK");
 
                     b.Property<int>("PerfilId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_PERFIL");
 
                     b.Property<string>("Rede")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("NOME_REDE");
 
                     b.HasKey("Id");
@@ -261,26 +265,26 @@ namespace AgendaOn.Infra.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasColumnName("ID_USUARIO");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(true)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("EMAIL");
 
                     b.Property<string>("IdIdentity")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("ID_IDENTITY");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("NOME");
 
                     b.HasKey("Id");
