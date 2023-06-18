@@ -1,4 +1,5 @@
-﻿@model AgendaOn.Presentation.ViewModels.PrestadoresViewModel
+﻿@using System.Globalization
+@model AgendaOn.Presentation.ViewModels.PrestadoresViewModel
 
 @{
     ViewData["Title"] = "Prestadores";
@@ -27,7 +28,7 @@
                     @item.Usuario.Nome
                 </td>
                 <td>
-                    @item.Preco.ToString("C")
+                    @item.Preco.ToString("C", new CultureInfo("pt-BR"))
                 </td>
                 <td class="text-center">
                     @item?.Perfil?.Avaliacoes.Average(_ => _?.Nota)?.ToString("F1")

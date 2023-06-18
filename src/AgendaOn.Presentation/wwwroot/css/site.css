@@ -21,3 +21,27 @@ body {
 .hide {
     display: none;
 }
+
+.custon-btn{
+    width:100%;
+}
+
+
+.custon-list {
+   
+}
+
+
+@media (max-width: 575.98px) {
+    .custon-list {
+        border: none;
+        padding: 0px;
+        color: #212520;
+        font-size:15px;
+    }
+
+        .custon-list:hover {
+            color: #212520;
+            background-color: #ffffff;
+        }
+}
