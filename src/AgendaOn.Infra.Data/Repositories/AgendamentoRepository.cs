@@ -76,8 +76,6 @@ namespace AgendaOn.Infra.Data.Repositories
 
         }
 
-
-
         public void Cancelar(int agendamentoId)
         {
             var agendamento = this.SelecionarPorId(agendamentoId);
